@@ -36,10 +36,10 @@ const NavBar = () => {
         <NavLink to="/"></NavLink>
       </li>
       {/* <li>
-        <NavLink to="/blog">Blog</NavLink>
+        <NavLink to="/"></NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact</NavLink>
+        <NavLink to="/"></NavLink>
       </li> */}
       {/* {
         user && <>
