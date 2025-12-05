@@ -7,3 +7,18 @@
   --color-primary: blue;
   --color-secondary: teal;
 }
+
+/* Active NavLink Style – Digital Life Lessons Theme */
+a.active {
+  @apply text-amber-500 font-semibold border-b-2 border-amber-500 pb-1;
+}
+
+/* Hover effect for non-active links */
+.navbar a:hover:not(.active) {
+  @apply text-amber-500 transition-colors duration-200;
+}
+
+/* Optional: Mobile menu active state */
+.menu a.active {
+  @apply bg-amber-50 dark:bg-amber-950/30 rounded-lg;
+}
