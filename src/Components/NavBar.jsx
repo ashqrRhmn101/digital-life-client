@@ -1,11 +1,11 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaMoon, FaSun, FaLeaf } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { AuthContext } from "../Contexts/AuthContext";
+import useAuth from "../Hooks/useAuth";
 
 const NavBar = () => {
-  const { user, logOutUser } = use(AuthContext);
+  const { user, logOutUser } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   // Theme Toggle
