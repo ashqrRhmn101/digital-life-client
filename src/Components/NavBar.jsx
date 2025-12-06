@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
 
 const NavBar = () => {
-  const { user, logOutUser } = useAuth();
+  const { user, signOutUser } = useAuth()
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   // Theme Toggle
@@ -27,7 +27,7 @@ const NavBar = () => {
       toast: true,
       position: "top-end",
     }).then(() => {
-      logOutUser().catch((err) => console.error(err));
+      signOutUser().catch((err) => console.error(err));
     });
   };
 

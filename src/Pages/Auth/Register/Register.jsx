@@ -57,7 +57,7 @@ const Register = () => {
       <form onSubmit={handleSubmit(handleRegister)}>
         <fieldset>
           <h2 className="text-2xl font-bold mb-1">Create an Account</h2>
-          <p className="text-gray-600 mb-4">Register with ZapShift</p>
+          <p className="text-gray-600 mb-4">Register with Digital Life</p>
 
           {/* Name */}
           <label className="label">Name</label>
