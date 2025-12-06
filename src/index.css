@@ -20,5 +20,5 @@ a.active {
 
 /* Optional: Mobile menu active state */
 .menu a.active {
-  @apply bg-amber-50 dark:bg-amber-950/30 rounded-lg;
+  @apply bg-amber-50 dark:bg-amber-950/20 rounded-lg;
 }
