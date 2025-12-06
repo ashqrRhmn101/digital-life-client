@@ -2,14 +2,13 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-// তোমার ৩টা ব্যানার ইমেজ (যদি না থাকে তাহলে এইগুলো ব্যবহার করো – free & perfect vibe)
 import banner1 from "../../../assets/bannerImg1.jpg";
 import banner2 from "../../../assets/bannerImg2.jpg";
 import banner3 from "../../../assets/bannerImg3.jpg";
 
 const Banner = () => {
   return (
-    <div className="relative -mt-1 mb-3 overflow-hidden"> {/* navbar এর নিচে লাগবে না যেন */}
+    <div className="relative -mt-1 mb-3 overflow-hidden"> 
       <Carousel
         autoPlay
         infiniteLoop

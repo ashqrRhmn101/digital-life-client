@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Ayesha Rahman",
+    "photo": "https://randomuser.me/api/portraits/women/65.jpg",
+    "rating": 5,
+    "review": "This platform encouraged me to reflect on my life and learn from past mistakes. The UI is clean, intuitive, and genuinely motivating.",
+    "date": "2025-01-04"
+  },
+  {
+    "id": 2,
+    "name": "Kazi Abdullah",
+    "photo": "https://randomuser.me/api/portraits/men/52.jpg",
+    "rating": 4,
+    "review": "A wonderful place to store meaningful thoughts. The premium lessons are inspiring and worth the upgrade.",
+    "date": "2025-01-02"
+  },
+  {
+    "id": 3,
+    "name": "Nishat Jahan",
+    "photo": "https://randomuser.me/api/portraits/women/44.jpg",
+    "rating": 5,
+    "review": "Loved the community aspect. Reading others’ life lessons helps me feel connected and more aware of personal growth.",
+    "date": "2025-01-09"
+  },
+  {
+    "id": 4,
+    "name": "Tanvir Ahmed",
+    "photo": "https://randomuser.me/api/portraits/men/31.jpg",
+    "rating": 4,
+    "review": "The featured lessons are powerful and well-curated. The platform is fast, secure, and user-friendly.",
+    "date": "2025-01-03"
+  },
+  {
+    "id": 5,
+    "name": "Mehjabin Akter",
+    "photo": "https://randomuser.me/api/portraits/women/90.jpg",
+    "rating": 5,
+    "review": "Creating my own life lessons has helped me reflect deeply. The dashboard is visually appealing and neatly organized.",
+    "date": "2025-01-08"
+  },
+  {
+    "id": 6,
+    "name": "Rafid Hasan",
+    "photo": "https://randomuser.me/api/portraits/men/11.jpg",
+    "rating": 5,
+    "review": "A great initiative. The UI animations, smooth browsing, and lesson categorization are truly impressive.",
+    "date": "2025-01-06"
+  },
+  {
+    "id": 7,
+    "name": "Sadia Noor",
+    "photo": "https://randomuser.me/api/portraits/women/19.jpg",
+    "rating": 4,
+    "review": "The emotional tone filter is a unique feature. Helps me discover relatable insights quickly.",
+    "date": "2025-01-01"
+  },
+  {
+    "id": 8,
+    "name": "Imran Hossain",
+    "photo": "https://randomuser.me/api/portraits/men/70.jpg",
+    "rating": 5,
+    "review": "Premium lessons are beautifully written. Stripe payment integration worked smoothly.",
+    "date": "2025-01-10"
+  },
+  {
+    "id": 9,
+    "name": "Maliha Khan",
+    "photo": "https://randomuser.me/api/portraits/women/12.jpg",
+    "rating": 5,
+    "review": "I love saving my favorite lessons. This platform actually helps me track my emotional growth.",
+    "date": "2025-01-07"
+  },
+  {
+    "id": 10,
+    "name": "Shakib Rahim",
+    "photo": "https://randomuser.me/api/portraits/men/25.jpg",
+    "rating": 4,
+    "review": "Great user experience, fast loading, and elegant card design. Definitely recommending it to friends.",
+    "date": "2025-01-05"
+  }
+]
