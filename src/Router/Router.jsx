@@ -5,6 +5,7 @@ import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
 import PublicLessons from "../Pages/PublicLessons/PublicLessons";
 import LessonsDetails from "../Pages/PublicLessons/LessonsDetails";
+import PrivateRouter from "./PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/lessons/:id",
-        Component: LessonsDetails,
+        element: (
+          <PrivateRouter>
+            <LessonsDetails />
+          </PrivateRouter>
+        ),
       },
     ],
   },

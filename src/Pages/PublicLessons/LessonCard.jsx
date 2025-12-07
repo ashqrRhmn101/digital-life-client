@@ -4,6 +4,7 @@ import { FaHeart, FaBookmark, FaEye, FaLock } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 
 const LessonCard = ({ lesson }) => {
+  // console.log(lesson)
   const { user } = useAuth();
   const isPremiumUser = user?.isPremium || false;
 

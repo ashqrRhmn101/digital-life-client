@@ -7,18 +7,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { FaHeart, FaBookmark, FaFlag, FaShareAlt, FaEye } from "react-icons/fa";
+import { MdKeyboardBackspace } from "react-icons/md";
 import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
 } from "react-share";
-import { LucideClock, LucideCalendar, Link } from "lucide-react";
+import { LucideClock, LucideCalendar } from "lucide-react";
 
 import ReportModal from "./ReportModal";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 import RecommendedCard from "./RecommendedCard";
 import { useState } from "react";
+import { Link } from "react-router";
 
 const LessonsDetails = () => {
   useEffect(() => {
@@ -32,6 +34,7 @@ const LessonsDetails = () => {
   }, []);
 
   const { id } = useParams();
+  // console.log(id)
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -45,6 +48,7 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
+  // console.log(lesson)
 
   // Fetch Comments
   const { data: comments = [] } = useQuery({
@@ -198,11 +202,17 @@ const LessonsDetails = () => {
               className="w-full h-64 object-cover rounded-2xl mb-6"
             />
           )}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
+          <Link
+            to={`/public-lessons`}
+            className="text-amber-600 font-medium hover:underline"
+          >
+            <span className="flex items-center gap-1 pb-3"><MdKeyboardBackspace /> Go Back Public Lessons</span>
+          </Link>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
             {lesson.title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-            {lesson.fullDescription}
+            {lesson.fullDescription || lesson.shortDescription}
           </p>
           <div className="flex gap-3">
             <span className="badge badge-lg bg-amber-500 text-white">
@@ -275,15 +285,15 @@ const LessonsDetails = () => {
         >
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaHeart className="text-3xl text-red-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold">{lesson.likes || 0} Likes</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.likes || 0} Likes</p>
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaBookmark className="text-3xl text-amber-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold">{lesson.saveCount || 0} Saves</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.saveCount || 0} Saves</p>
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaEye className="text-3xl text-blue-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold">{lesson.views || 0} Views</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.views || 0} Views</p>
           </div>
         </div>
 
@@ -349,7 +359,7 @@ const LessonsDetails = () => {
           data-aos-delay="500"
           className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-8 mb-8"
         >
-          <h2 className="text-3xl font-bold mb-6">Comments</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Comments</h2>
           {user ? (
             <CommentForm
               onSubmit={(text) => postCommentMutation.mutate(text)}
@@ -364,7 +374,7 @@ const LessonsDetails = () => {
 
         {/* 7. Similar & Recommended */}
         <div data-aos="fade-up" data-aos-delay="600">
-          <h2 className="text-3xl font-bold text-center mb-8">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">
             Similar Lessons
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
