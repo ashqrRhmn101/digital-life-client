@@ -70,7 +70,7 @@ const LessonCard = ({ lesson }) => {
             </span>
           </div>
           <Link
-            to={`/lesson/${lesson._id}`}
+            to={`/lessons/${lesson._id}`}
             className="text-amber-600 font-medium hover:underline"
           >
             Read More →
