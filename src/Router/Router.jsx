@@ -6,6 +6,7 @@ import Register from "../Pages/Auth/Register/Register";
 import PublicLessons from "../Pages/PublicLessons/PublicLessons";
 import LessonsDetails from "../Pages/PublicLessons/LessonsDetails";
 import PrivateRouter from "./PrivateRouter";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,20 @@ const router = createBrowserRouter([
             <LessonsDetails />
           </PrivateRouter>
         ),
+      },
+    ],
+  },
+
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: " ",
       },
     ],
   },
