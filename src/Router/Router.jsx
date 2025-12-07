@@ -7,6 +7,7 @@ import PublicLessons from "../Pages/PublicLessons/PublicLessons";
 import LessonsDetails from "../Pages/PublicLessons/LessonsDetails";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: (
       <PrivateRouter>
         <DashboardLayout />
@@ -49,7 +50,8 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: " ",
+        path: '/dashboard',
+        Component: DashboardHome,
       },
     ],
   },
