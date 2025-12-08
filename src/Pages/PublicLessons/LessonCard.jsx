@@ -11,7 +11,7 @@ const LessonCard = ({ lesson }) => {
   const isPremiumLesson = lesson.accessLevel === "premium";
 
   return (
-    <div className="group relative rounded-2xl shadow-lg border-[1px] border-black/70 overflow-hidden hover:shadow-2xl transition-all duration-500">
+    <div className="group relative rounded-2xl shadow-lg border-[1px] border-black/70 overflow-hidden hover:shadow-2xl transition-all duration-500" data-aos="fade-right">
       {isPremiumLesson && !isPremiumUser && (
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-10 flex items-center justify-center">
           <div className="text-center text-white text-center">

@@ -33,7 +33,7 @@ const PublicLessons = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="min-h-screen bg-base-100 py-12">
+    <div className="min-h-screen bg-base-100 py-12" data-aos="fade-down">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent mb-4">
@@ -98,7 +98,7 @@ const PublicLessons = () => {
         {lessons.length === 0 ? (
           <p className="text-center text-gray-500 text-xl">No lessons found</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" >
             {lessons.map((lesson) => (
               <LessonCard key={lesson._id} lesson={lesson} />
             ))}

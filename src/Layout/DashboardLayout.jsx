@@ -19,7 +19,7 @@ const DashboardLayout = () => {
 //   const isAdmin = user?.role === "admin"; 
 
   return (
-    <div className="drawer lg:drawer-open min-h-screen bg-base-100">
+    <div className="drawer lg:drawer-open min-h-screen bg-base-100" data-aos="fade-down">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
