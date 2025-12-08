@@ -1,13 +1,22 @@
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
 import { AuthContext } from "../Contexts/AuthContext";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useAuth = () => {
-  const { user, loading, logOutUser } = useContext(AuthContext);
+  const {
+    user,
+    loading,
+    signOutUser,
+    registerUser,
+    signInUser,
+    googleSignIn,
+    userProfile,
+  } = useContext(AuthContext);
+
   const axiosSecure = useAxiosSecure();
 
-  // role + isPremium
+  // MongoDB role + isPremium
   const {
     data: currentUser = {},
     isLoading: userLoading,
@@ -22,11 +31,13 @@ const useAuth = () => {
   });
 
   return {
-    // firebase user (email, photoURL, displayName)
     user,
     loading: loading || userLoading,
-    logOutUser,
-    // MongoDB user..
+    signOutUser,
+    registerUser,
+    signInUser,
+    googleSignIn,
+    userProfile,
     currentUser,
     isAdmin: currentUser?.role === "admin",
     isPremium: currentUser?.isPremium || false,

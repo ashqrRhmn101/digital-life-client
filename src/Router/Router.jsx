@@ -8,6 +8,8 @@ import LessonsDetails from "../Pages/PublicLessons/LessonsDetails";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import AddLesson from "../Pages/Dashboard/AddLesson/AddLesson";
+import MyLessons from "../Pages/Dashboard/MyLessons/MyLessons";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +52,16 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/dashboard',
+        path: "/dashboard",
         Component: DashboardHome,
+      },
+      {
+        path: "/dashboard/add-lesson",
+        Component: AddLesson,
+      },
+      {
+        path: "/dashboard/my-lessons",
+        Component: MyLessons,
       },
     ],
   },

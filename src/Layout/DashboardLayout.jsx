@@ -15,8 +15,8 @@ import {
 import useAuth from "../Hooks/useAuth";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin"; 
+  const { isAdmin, isPremium, user } = useAuth();
+//   const isAdmin = user?.role === "admin"; 
 
   return (
     <div className="drawer lg:drawer-open min-h-screen bg-base-100">
@@ -77,12 +77,10 @@ const DashboardLayout = () => {
                 alt="User"
                 className="w-12 h-12 rounded-full ring-2 ring-amber-500"
               />
-              <div>
+              <div className="space-y-1">
                 <p className="font-bold">{user?.displayName}</p>
                 <p className="text-sm text-gray-500">{user?.email}</p>
-                {user?.isPremium && (
-                  <span className="badge badge-warning mt-1">Premium ⭐</span>
-                )}
+                {user && isPremium && <span className="badge badge-warning">Premium ⭐</span> || <span className="badge badge-warning text-red-500 font-semibold">Not Premium</span>}
               </div>
             </div>
           </div>
