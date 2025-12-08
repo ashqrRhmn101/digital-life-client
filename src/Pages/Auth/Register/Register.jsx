@@ -1,134 +1,172 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
-// import useAuth from "../../Hooks/useAuth";
-// import SocialLogin from "./SocialLogin";
+import SocialLogin from "../../SocialLogin/SocialLogin";
 
 const Register = () => {
+  const { registerUser, userProfile } = useAuth();
+  useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const { registerUser, userProfile } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleRegister = async (data) => {
+  const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const profileImg = data.file[0];
-
-      // 1️⃣ Create Account (Firebase)
+      // 1. Create Firebase User
       const result = await registerUser(data.email, data.password);
-      console.log("User created:", result.user);
+      console.log("Firebase user created:", result.user);
 
-      // 2️⃣ Upload image to ImgBB
+      // 2. Upload Image to ImgBB
+      const imageFile = data.photo[0];
       const formData = new FormData();
-      formData.append("image", profileImg);
+      formData.append("image", imageFile);
 
-      const imgURL = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_image_host_key
-      }`;
+      const imgRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
+        formData
+      );
+      const photoURL = imgRes.data.data.url;
 
-      const res = await axios.post(imgURL, formData);
-      const photoURL = res.data.data.url;
+      // 3. Update Firebase Profile
+      await userProfile({ displayName: data.name, photoURL });
 
-      // 3️⃣ Update Firebase User Profile
-      const userProfileData = {
-        displayName: data.name,
-        photoURL: photoURL,
-      };
+      // 4. Save User to MongoDB (role + isPremium)
+      await axios.post("/api/users", {
+        name: data.name,
+        email: data.email,
+        photoURL,
+        role: "user",
+        isPremium: false,
+        createdAt: new Date(),
+      });
 
-      await userProfile(userProfileData);
-      console.log("User profile updated");
+      Swal.fire({
+        icon: "success",
+        title: "Welcome aboard!",
+        text: "Account created successfully",
+        timer: 2000,
+        showConfirmButton: false,
+      });
 
-      // 4️⃣ Redirect
-      navigate(location.state || "/");
-    } catch (error) {
-      console.error("Registration Error:", error.message);
+      reset();
+      navigate(location.state?.from || "/");
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: err.message || "Something went wrong",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 shadow rounded-lg bg-white">
-      <form onSubmit={handleSubmit(handleRegister)}>
-        <fieldset>
-          <h2 className="text-2xl font-bold mb-1">Create an Account</h2>
-          <p className="text-gray-600 mb-4">Register with Digital Life</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-black px-4 py-12">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="100"
+        className="w-full max-w-md"
+      >
+        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800">
+          <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent mb-2">
+            Join Digital Life Lessons
+          </h2>
+          <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
+            Start preserving your wisdom today
+          </p>
 
-          {/* Name */}
-          <label className="label">Name</label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-            className="input input-bordered w-full"
-            placeholder="Your Name"
-          />
-          {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            {/* Name */}
+            <div>
+              <label className="label font-medium">Name</label>
+              <input
+                type="text"
+                {...register("name", { required: "Name is required" })}
+                className="input input-bordered w-full bg-white/50 dark:bg-gray-700"
+                placeholder="John Doe"
+              />
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+            </div>
 
-          {/* Photo */}
-          <label className="label mt-3">Photo</label>
-          <input
-            type="file"
-            {...register("file", { required: true })}
-            className="file-input file-input-bordered w-full"
-          />
-          {errors.file && <p className="text-red-500 text-sm">Photo is required</p>}
+            {/* Photo */}
+            <div>
+              <label className="label font-medium">Profile Photo</label>
+              <input
+                type="file"
+                accept="image/*"
+                {...register("photo", { required: "Photo is required" })}
+                className="file-input file-input-bordered w-full bg-white/50 dark:bg-gray-700"
+              />
+              {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>}
+            </div>
 
-          {/* Email */}
-          <label className="label mt-3">Email</label>
-          <input
-            type="email"
-            {...register("email", { required: true })}
-            className="input input-bordered w-full"
-            placeholder="Email"
-          />
-          {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
+            {/* Email */}
+            <div>
+              <label className="label font-medium">Email</label>
+              <input
+                type="email"
+                {...register("email", { required: "Email is required" })}
+                className="input input-bordered w-full bg-white/50 dark:bg-gray-700"
+                placeholder="you@example.com"
+              />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+            </div>
 
-          {/* Password */}
-          <label className="label mt-3">Password</label>
-          <input
-            type="password"
-            {...register("password", {
-              required: true,
-              minLength: 6,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]|\\:;"'<>,.?/~`]).{8,}$/,
-            })}
-            className="input input-bordered w-full"
-            placeholder="Password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-red-500 text-sm">Password is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500 text-sm">
-              Must be at least 6 characters
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500 text-sm">
-              Must include uppercase, lowercase, number & special character
-            </p>
-          )}
+            {/* Password */}
+            <div>
+              <label className="label font-medium">Password</label>
+              <input
+                type="password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: { value: 6, message: "Minimum 6 characters" },
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                    message: "Must have uppercase & lowercase letter",
+                  },
+                })}
+                className="input input-bordered w-full bg-white/50 dark:bg-gray-700"
+                placeholder="••••••••"
+              />
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+            </div>
 
-          {/* Submit Button */}
-          <button className="btn btn-primary w-full mt-4">Register</button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-lg w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-none shadow-lg"
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Create Account"
+              )}
+            </button>
+          </form>
 
-          <p className="text-sm text-center mt-3">
+          <p className="text-center mt-6 text-gray-600 dark:text-gray-300">
             Already have an account?{" "}
-            <Link to="/login" state={location.state} className="text-blue-600">
-              Login
+            <Link to="/login" state={location.state} className="font-bold text-amber-600 hover:underline">
+              Login here
             </Link>
           </p>
-        </fieldset>
-      </form>
 
-      <div className="mt-4">
-        {/* <SocialLogin /> */}
+          <div className="divider my-8 text-gray-500">OR</div>
+          <SocialLogin />
+        </div>
       </div>
     </div>
   );

@@ -1,93 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
+import SocialLogin from "../../SocialLogin/SocialLogin";
+import axios from "axios";
 
 const Login = () => {
+  const { signInUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { signInUser } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const userSignIn = async (data) => {
+  const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const result = await signInUser(data.email, data.password);
-      console.log("Logged In:", result.user);
+      await signInUser(data.email, data.password);
 
-      navigate(location.state || "/");
-    } catch (error) {
-      console.error("Login error:", error.message);
+      // optional: MongoDB  login track
+      await axios.post("/api/users/login", { email: data.email });
+
+      Swal.fire({
+        icon: "success",
+        title: "Welcome back!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      navigate(location.state?.from || "/dashboard");
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: err.message.includes("wrong-password")
+          ? "Wrong password"
+          : "Invalid email or password",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 shadow-lg p-8 rounded-xl bg-white">
-      <form onSubmit={handleSubmit(userSignIn)}>
-        <fieldset>
-          <h2 className="text-3xl font-bold text-gray-800 mb-1">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-black px-4 py-12">
+      <div data-aos="fade-up" className="w-full max-w-md">
+        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800">
+          <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent mb-2">
             Welcome Back
           </h2>
-          <p className="text-gray-600 mb-6">Login with Digital Life</p>
+          <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
+            Continue your journey of wisdom
+          </p>
 
-          {/* Email */}
-          <label className="label font-semibold">Email</label>
-          <input
-            type="email"
-            {...register("email", { required: true })}
-            className="input input-bordered w-full"
-            placeholder="Enter your email"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">Email is required</p>
-          )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div>
+              <label className="label font-medium">Email</label>
+              <input
+                type="email"
+                {...register("email", { required: "Email is required" })}
+                className="input input-bordered w-full bg-white/50 dark:bg-gray-700"
+                placeholder="you@example.com"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-          {/* Password */}
-          <label className="label mt-4 font-semibold">Password</label>
-          <input
-            type="password"
-            {...register("password", { required: true, minLength: 6 ,  pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]|\\:;"'<>,.?/~`]).{8,}$/,
-            })}
-            className="input input-bordered w-full"
-            placeholder="Enter your password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-red-500 text-sm">Password is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500 text-sm">
-              Must be at least 6 characters
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500 text-sm">
-              Must include uppercase, lowercase, number & special character
-            </p>
-          )}
+            <div>
+              <label className="label font-medium">Password</label>
+              <input
+                type="password"
+                {...register("password", { required: "Password is required" })}
+                className="input input-bordered w-full bg-white/50 dark:bg-gray-700"
+                placeholder="••••••••"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-          {/* Login Button */}
-          <button className="btn">
-            Login
-          </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-lg w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-none shadow-lg"
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </form>
 
-          {/* Create Account */}
-          <p className="">
-            Don’t have an account?{" "}
+          <p className="text-center mt-6 text-gray-600 dark:text-gray-300">
+            New here?{" "}
             <Link
               to="/register"
               state={location.state}
-              className=""
+              className="font-bold text-amber-600 hover:underline"
             >
-              Register
+              Create account
             </Link>
           </p>
-        </fieldset>
-      </form>
+
+          <div className="divider my-8 text-gray-500">OR</div>
+          <SocialLogin />
+        </div>
+      </div>
     </div>
   );
 };
