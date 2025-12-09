@@ -89,7 +89,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard"
-              className="hover:bg-amber-100 dark:hover:bg-amber-900"
+              className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
             >
               <FaHome className="text-xl text-amber-600" />
               Dashboard Home
@@ -98,7 +98,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/add-lesson"
-              className="hover:bg-amber-100 dark:hover:bg-amber-900"
+              className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
             >
               <FaPlus className="text-xl text-amber-600" />
               Add Lesson
@@ -107,7 +107,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/my-lessons"
-              className="hover:bg-amber-100 dark:hover:bg-amber-900"
+              className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
             >
               <FaBook className="text-xl text-amber-600" />
               My Lessons
@@ -116,7 +116,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/my-favorites"
-              className="hover:bg-amber-100 dark:hover:bg-amber-900"
+              className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
             >
               <FaStar className="text-xl text-amber-600" />
               My Favorites
@@ -125,7 +125,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/profile"
-              className="hover:bg-amber-100 dark:hover:bg-amber-900"
+              className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
             >
               <FaUser className="text-xl text-amber-600" />
               Profile
@@ -139,7 +139,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/admin"
-                  className="hover:bg-amber-100 dark:hover:bg-amber-900"
+                  className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
                 >
                   <FaShieldAlt className="text-xl text-red-600" />
                   Admin Home
@@ -148,7 +148,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/admin/manage-users"
-                  className="hover:bg-amber-100 dark:hover:bg-amber-900"
+                  className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
                 >
                   <FaUsers className="text-xl text-red-600" />
                   Manage Users
@@ -157,7 +157,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/admin/manage-lessons"
-                  className="hover:bg-amber-100 dark:hover:bg-amber-900"
+                  className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
                 >
                   <FaListAlt className="text-xl text-red-600" />
                   Manage Lessons
@@ -166,7 +166,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/admin/reported-lessons"
-                  className="hover:bg-amber-100 dark:hover:bg-amber-900"
+                  className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
                 >
                   <FaFlag className="text-xl text-red-600" />
                   Reported Lessons
@@ -175,7 +175,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/admin/profile"
-                  className="hover:bg-amber-100 dark:hover:bg-amber-900"
+                  className="hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-white"
                 >
                   <FaUser className="text-xl text-red-600" />
                   Admin Profile
