@@ -10,6 +10,8 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import AddLesson from "../Pages/Dashboard/AddLesson/AddLesson";
 import MyLessons from "../Pages/Dashboard/MyLessons/MyLessons";
+import Pricing from "../Pages/Pricing/Pricing";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
+      {
+        path: "/pricing",
+        Component: Pricing,
+      },
     ],
   },
 
@@ -62,6 +68,12 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-lessons",
         Component: MyLessons,
+      },
+
+      // Admin.......
+      {
+        path: "/dashboard/admin/manage-users",
+        Component: ManageUsers,
       },
     ],
   },

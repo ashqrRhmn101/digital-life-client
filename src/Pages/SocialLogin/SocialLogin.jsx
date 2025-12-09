@@ -17,6 +17,7 @@ const SocialLogin = () => {
     try {
       const result = await googleSignIn();
       const loggedUser = result.user;
+      console.log(loggedUser)
 
       // Prepare user data for MongoDB
       const userInfo = {
@@ -26,8 +27,8 @@ const SocialLogin = () => {
           loggedUser.photoURL || "https://i.ibb.co/0s3Z9kL/profile-avatar.jpg",
         role: "user",
         isPremium: false,
-        createdAt: new Date(),
-        lastLoginAt: new Date(),
+        createdAt: new Date().toISOString(),
+        lastLoginAt: new Date().toISOString(),
       };
 
       // Upsert user in MongoDB (create if not exists)
