@@ -14,6 +14,9 @@ import Pricing from "../Pages/Pricing/Pricing";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import MyFavorites from "../Pages/Dashboard/MyFavorites/MyFavorites";
 import Profile from "../Pages/Dashboard/MyProfile/Profile";
+import PaymentSuccess from "../Pages/Pricing/PaymentSuccess/PaymentSuccess";
+import PaymentCancel from "../Pages/Pricing/PaymentCancel/PaymentCancel";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +51,14 @@ const router = createBrowserRouter([
         path: "/pricing",
         Component: Pricing,
       },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/payment-cancel",
+        element: <PaymentCancel />,
+      },
     ],
   },
 
@@ -81,6 +92,10 @@ const router = createBrowserRouter([
       },
 
       // Admin.......
+      {
+        path: "/dashboard/admin",
+        Component: AdminHome,
+      },
       {
         path: "/dashboard/admin/manage-users",
         Component: ManageUsers,
