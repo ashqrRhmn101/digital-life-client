@@ -3,7 +3,7 @@ import useAuth from "../../Hooks/useAuth";
 
 const CommentList = ({ comments }) => {
   const {user} = useAuth()
-  console.log(user)
+  // console.log(user)
   return (
     <div className="space-y-6">
       {comments.length === 0 ? (

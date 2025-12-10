@@ -37,6 +37,7 @@ const LessonsDetails = () => {
   // console.log(id)
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  // console.log(user)
   const queryClient = useQueryClient();
   const [showReportModal, setShowReportModal] = useState(false);
 
@@ -105,7 +106,10 @@ const LessonsDetails = () => {
   // Report Handler
   const handleReport = async (reason) => {
     await axiosSecure.post(`/lessons/${id}/report`, {
-      reporterId: user._id,
+      lessonTitle: lesson.title,
+      reporterId: user?._id,
+      reporterName: user?.displayName,
+      // action: action,
       reason,
     });
     Swal.fire({
@@ -206,7 +210,9 @@ const LessonsDetails = () => {
             to={`/public-lessons`}
             className="text-amber-600 font-medium hover:underline"
           >
-            <span className="flex items-center gap-1 pb-3"><MdKeyboardBackspace /> Go Back Public Lessons</span>
+            <span className="flex items-center gap-1 pb-3">
+              <MdKeyboardBackspace /> Go Back Public Lessons
+            </span>
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
             {lesson.title}
@@ -285,15 +291,21 @@ const LessonsDetails = () => {
         >
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaHeart className="text-3xl text-red-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.likes || 0} Likes</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">
+              {lesson.likes || 0} Likes
+            </p>
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaBookmark className="text-3xl text-amber-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.saveCount || 0} Saves</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">
+              {lesson.saveCount || 0} Saves
+            </p>
           </div>
           <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg rounded-2xl p-4 text-center">
             <FaEye className="text-3xl text-blue-500 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800 dark:text-white">{lesson.views || 0} Views</p>
+            <p className="text-2xl font-bold text-gray-800 dark:text-white">
+              {lesson.views || 0} Views
+            </p>
           </div>
         </div>
 
@@ -359,7 +371,9 @@ const LessonsDetails = () => {
           data-aos-delay="500"
           className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-8 mb-8"
         >
-          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Comments</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+            Comments
+          </h2>
           {user ? (
             <CommentForm
               onSubmit={(text) => postCommentMutation.mutate(text)}
