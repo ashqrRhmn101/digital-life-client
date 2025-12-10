@@ -17,6 +17,7 @@ import Profile from "../Pages/Dashboard/MyProfile/Profile";
 import PaymentSuccess from "../Pages/Pricing/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/Pricing/PaymentCancel/PaymentCancel";
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
+import ManageLessons from "../Pages/Dashboard/Admin/ManageLessons/ManageLessons";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin/manage-users",
         Component: ManageUsers,
+      },
+      {
+        path: "/dashboard/admin/manage-lessons",
+        Component: ManageLessons,
       },
     ],
   },
