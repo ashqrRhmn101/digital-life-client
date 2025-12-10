@@ -7,6 +7,7 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Loading from "../../../Components/Loading";
 
+
 const MyFavorites = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();

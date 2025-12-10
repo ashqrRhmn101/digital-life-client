@@ -13,6 +13,7 @@ import MyLessons from "../Pages/Dashboard/MyLessons/MyLessons";
 import Pricing from "../Pages/Pricing/Pricing";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import MyFavorites from "../Pages/Dashboard/MyFavorites/MyFavorites";
+import Profile from "../Pages/Dashboard/MyProfile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-favorites",
         Component: MyFavorites,
+      },
+      {
+        path: "/dashboard/profile",
+        Component: Profile,
       },
 
       // Admin.......
