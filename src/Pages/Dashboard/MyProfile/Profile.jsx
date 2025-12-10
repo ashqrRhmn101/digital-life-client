@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -31,27 +31,33 @@ const Profile = () => {
       const res = await axiosSecure.get("/lessons", {
         params: { email: user.email, visibility: "public" },
       });
-      return res.data;
+      return res.data.lessons;
     },
   });
+  //   console.log(publicLessons);
 
   const mutation = useMutation({
     mutationFn: async ({ name, photoURL }) => {
       // update firebase
       await userProfile({ displayName: name, photoURL });
       // update backend
-      await axiosSecure.patch("/users", { name, photoURL });
+      await axiosSecure.put("/users", { email: user.email, name, photoURL });
     },
     onSuccess: () => {
       Swal.fire("Updated!", "Profile updated successfully", "success");
       setEditing(false);
-      queryClient.invalidateQueries(["profile"]);
+      queryClient.invalidateQueries(["profile", user.email]);
+    },
+    onError: (error) => {
+      Swal.fire("Error!", error.message, "error");
     },
   });
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: { name: profile.name, photo: "" },
-  });
+  const { register, handleSubmit, reset } = useForm();
+
+  useEffect(() => {
+    reset({ name: profile.name, photo: "" });
+  }, [profile, reset]);
 
   const onUpdate = async (data) => {
     let photoURL = profile.photoURL;

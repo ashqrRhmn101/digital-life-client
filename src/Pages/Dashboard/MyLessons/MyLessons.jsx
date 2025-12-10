@@ -16,8 +16,10 @@ const MyLessons = () => {
   const { data: lessons = [], isLoading } = useQuery({
     queryKey: ["my-lessons", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/lessons", { params: { email: user.email } });
-      return res.data;
+      const res = await axiosSecure.get("/lessons", {
+        params: { email: user.email },
+      });
+      return res.data.lessons;
     },
   });
 
@@ -71,7 +73,10 @@ const MyLessons = () => {
 
   return (
     <div className="min-h-screen bg-base-100 py-12 px-4">
-      <h2 data-aos="fade-up" className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent mb-8">
+      <h2
+        data-aos="fade-up"
+        className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent mb-8"
+      >
         My Lessons
       </h2>
 
@@ -92,7 +97,11 @@ const MyLessons = () => {
           </thead>
           <tbody>
             {lessons.map((lesson, index) => (
-              <tr data-aos="fade-up" data-aos-delay={index * 100} key={lesson._id}>
+              <tr
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+                key={lesson._id}
+              >
                 <td>{lesson.title}</td>
                 <td>{lesson.category}</td>
                 <td>{lesson.emotionalTone}</td>
@@ -102,7 +111,12 @@ const MyLessons = () => {
                 <td>
                   <select
                     defaultValue={lesson.visibility}
-                    onChange={(e) => updateMutation.mutate({ id: lesson._id, data: { visibility: e.target.value } })}
+                    onChange={(e) =>
+                      updateMutation.mutate({
+                        id: lesson._id,
+                        data: { visibility: e.target.value },
+                      })
+                    }
                     className="select select-xs select-bordered"
                   >
                     <option>Public</option>
@@ -114,7 +128,12 @@ const MyLessons = () => {
                     <select
                       defaultValue={lesson.accessLevel}
                       disabled={!isPremium}
-                      onChange={(e) => updateMutation.mutate({ id: lesson._id, data: { accessLevel: e.target.value } })}
+                      onChange={(e) =>
+                        updateMutation.mutate({
+                          id: lesson._id,
+                          data: { accessLevel: e.target.value },
+                        })
+                      }
                       className="select select-xs select-bordered"
                     >
                       <option>Free</option>
@@ -123,8 +142,18 @@ const MyLessons = () => {
                   </Tippy>
                 </td>
                 <td className="flex gap-2">
-                  <button onClick={() => handleEdit(lesson)} className="btn btn-sm btn-info"><FaEdit /></button>
-                  <button onClick={() => handleDelete(lesson._id)} className="btn btn-sm btn-error"><FaTrash /></button>
+                  <button
+                    onClick={() => handleEdit(lesson)}
+                    className="btn btn-sm btn-info"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(lesson._id)}
+                    className="btn btn-sm btn-error"
+                  >
+                    <FaTrash />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -135,13 +164,34 @@ const MyLessons = () => {
       {/* Edit Modal */}
       {editModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div data-aos="zoom-in" className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-lg w-full">
+          <div
+            data-aos="zoom-in"
+            className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-lg w-full"
+          >
             <h3 className="text-2xl font-bold mb-4">Edit Lesson</h3>
             <form onSubmit={handleSubmit(onUpdate)} className="space-y-4">
-              <input type="text" {...register("title")} className="input input-bordered w-full" />
-              <textarea {...register("description")} className="textarea textarea-bordered w-full h-32" />
-              <button type="submit" className="btn bg-amber-600 text-white w-full">Update</button>
-              <button type="button" onClick={() => setEditModalOpen(false)} className="btn btn-outline w-full">Cancel</button>
+              <input
+                type="text"
+                {...register("title")}
+                className="input input-bordered w-full"
+              />
+              <textarea
+                {...register("description")}
+                className="textarea textarea-bordered w-full h-32"
+              />
+              <button
+                type="submit"
+                className="btn bg-amber-600 text-white w-full"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditModalOpen(false)}
+                className="btn btn-outline w-full"
+              >
+                Cancel
+              </button>
             </form>
           </div>
         </div>
