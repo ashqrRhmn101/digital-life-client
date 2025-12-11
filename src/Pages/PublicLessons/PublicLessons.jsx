@@ -30,6 +30,8 @@ const PublicLessons = () => {
 
   const { lessons = [], totalPages = 1 } = data;
 
+  // console.log(lessons)
+
   if (isLoading) return <Loading />;
 
   return (

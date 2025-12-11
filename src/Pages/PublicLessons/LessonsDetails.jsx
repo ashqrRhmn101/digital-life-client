@@ -6,7 +6,14 @@ import Swal from "sweetalert2";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
-import { FaHeart, FaBookmark, FaFlag, FaShareAlt, FaEye } from "react-icons/fa";
+import {
+  FaHeart,
+  FaBookmark,
+  FaFlag,
+  FaShareAlt,
+  FaEye,
+  FaLock,
+} from "react-icons/fa";
 import { MdKeyboardBackspace } from "react-icons/md";
 import {
   FacebookShareButton,
@@ -21,6 +28,7 @@ import CommentList from "./CommentList";
 import RecommendedCard from "./RecommendedCard";
 import { useState } from "react";
 import { Link } from "react-router";
+import Loading from "../../Components/Loading";
 
 const LessonsDetails = () => {
   useEffect(() => {
@@ -34,10 +42,8 @@ const LessonsDetails = () => {
   }, []);
 
   const { id } = useParams();
-  // console.log(id)
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  // console.log(user)
   const queryClient = useQueryClient();
   const [showReportModal, setShowReportModal] = useState(false);
 
@@ -50,6 +56,18 @@ const LessonsDetails = () => {
     },
   });
   // console.log(lesson)
+
+  const { data: profile = {} } = useQuery({
+    queryKey: ["profile", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/user", {
+        params: { email: user?.email },
+      });
+      return res.data;
+    },
+  });
+
+  // console.log(profile)
 
   // Fetch Comments
   const { data: comments = [] } = useQuery({
@@ -168,10 +186,10 @@ const LessonsDetails = () => {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   // Premium Check
-  if (lesson.accessLevel === "premium" && !user?.isPremium) {
+  if (lesson.accessLevel === "premium" && !profile?.isPremium) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-base-100">
         <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md">
@@ -218,7 +236,9 @@ const LessonsDetails = () => {
             {lesson.title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-            {lesson.fullDescription || lesson.shortDescription}
+            {lesson.fullDescription ||
+              lesson.shortDescription ||
+              lesson.description}
           </p>
           <div className="flex gap-3">
             <span className="badge badge-lg bg-amber-500 text-white">
@@ -274,7 +294,7 @@ const LessonsDetails = () => {
                 Total Lessons: {lesson.totalLessonsByAuthor || 42}
               </p>
               <Link
-                to={`/profile/${lesson.creatorEmail}`}
+                to={`/dashboard/profile`}
                 className="btn btn-sm bg-amber-600 text-white mt-2"
               >
                 View All by This Author
@@ -333,22 +353,22 @@ const LessonsDetails = () => {
           >
             <FaFlag className="text-xl" />
           </button>
-          <div className="dropdown dropdown-top md:dropdown-bottom">
+          <div className="dropdown dropdown-top md:dropdown-right">
             <button className="btn btn-circle btn-outline text-blue-500 hover:bg-blue-500 hover:text-white">
               <FaShareAlt className="text-xl" />
             </button>
-            <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-              <li>
+            <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box z-50 text-center">
+              <li className="hover:bg-orange-500 rounded-4xl px-10">
                 <FacebookShareButton url={window.location.href}>
                   Facebook
                 </FacebookShareButton>
               </li>
-              <li>
+              <li className="hover:bg-orange-500 rounded-4xl px-10">
                 <TwitterShareButton url={window.location.href}>
-                  X (Twitter)
+                  X
                 </TwitterShareButton>
               </li>
-              <li>
+              <li className="hover:bg-orange-500 rounded-4xl px-10">
                 <LinkedinShareButton url={window.location.href}>
                   LinkedIn
                 </LinkedinShareButton>
@@ -369,7 +389,7 @@ const LessonsDetails = () => {
         <div
           data-aos="fade-up"
           data-aos-delay="500"
-          className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-8 mb-8"
+          className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-8 mb-8 z-0"
         >
           <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
             Comments

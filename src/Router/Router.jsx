@@ -19,6 +19,7 @@ import PaymentCancel from "../Pages/Pricing/PaymentCancel/PaymentCancel";
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
 import ManageLessons from "../Pages/Dashboard/Admin/ManageLessons/ManageLessons";
 import ReportedLessons from "../Pages/Dashboard/Admin/ReportedLessons/ReportedLessons";
+import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile/AdminProfile";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin/reported-lessons",
         Component: ReportedLessons,
+      },
+      {
+        path: "/dashboard/admin/profile",
+        Component: AdminProfile,
       },
     ],
   },

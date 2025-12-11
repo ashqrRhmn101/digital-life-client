@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
@@ -22,6 +24,19 @@ const MyLessons = () => {
       return res.data.lessons;
     },
   });
+
+  // user email find
+  const { data: profile = {} } = useQuery({
+    queryKey: ["profile", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/user", {
+        params: { email: user.email },
+      });
+      return res.data;
+    },
+  });
+  // console.log(profile);
+  const isPremium = profile?.isPremium || false;
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {

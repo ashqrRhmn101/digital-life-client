@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
 
 const NavBar = () => {
-  const { user, signOutUser } = useAuth()
+  const { user, signOutUser } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   // Theme Toggle

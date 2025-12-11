@@ -2,16 +2,37 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaBookmark, FaEye, FaLock } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const LessonCard = ({ lesson }) => {
   // console.log(lesson)
   const { user } = useAuth();
-  const isPremiumUser = user?.isPremium || false;
+  const axiosSecure = useAxiosSecure();
+
+  const { data: profile = {} } = useQuery({
+    queryKey: ["profile", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/user", {
+        params: { email: user?.email },
+      });
+      return res.data;
+    },
+  });
+
+  const isPremiumUser = profile?.isPremium || false;
 
   const isPremiumLesson = lesson.accessLevel === "premium";
 
+  // console.log(profile);
+  // console.log(isPremiumUser);
+  // console.log(isPremiumLesson);
+
   return (
-    <div className="group relative rounded-2xl shadow-lg border-[1px] border-black/70 overflow-hidden hover:shadow-2xl transition-all duration-500" data-aos="fade-right">
+    <div
+      className="group relative rounded-2xl shadow-lg border-[1px] border-black/70 overflow-hidden hover:shadow-2xl transition-all duration-500"
+      data-aos="fade-right"
+    >
       {isPremiumLesson && !isPremiumUser && (
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-10 flex items-center justify-center">
           <div className="text-center text-white text-center">
@@ -45,7 +66,7 @@ const LessonCard = ({ lesson }) => {
           {lesson.title}
         </h3>
         <p className="text-gray-600 dark:text-gray-300 mb-4">
-          {lesson.shortDescription}
+          {lesson.shortDescription || lesson.description}
         </p>
 
         <div className="flex flex-wrap gap-2 mb-4">
