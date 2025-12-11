@@ -51,7 +51,7 @@ const Pricing = () => {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-16">
+        <div className="grid md:grid-cols-2 gap-8 md:max-w-5xl mx-auto mt-16">
 
           {/* Free Plan */}
           <div
@@ -93,7 +93,7 @@ const Pricing = () => {
 
             <div className="text-white">
               <h3 className="text-4xl font-bold mb-4">Premium</h3>
-              <p className="text-7xl font-extrabold mb-2">
+              <p className="text-6xl font-extrabold mb-2">
                 ৳1500
                 <span className="text-xl font-normal opacity-90">/lifetime</span>
               </p>

@@ -57,6 +57,7 @@ const LessonsDetails = () => {
   });
   // console.log(lesson)
 
+  // uer profile get
   const { data: profile = {} } = useQuery({
     queryKey: ["profile", user?.email],
     queryFn: async () => {
@@ -66,8 +67,18 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
-
   // console.log(profile)
+
+  // user status get by totalLessons
+  const { data: stats = {} } = useQuery({
+    queryKey: ["user-stats", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/user-stats", {
+        params: { email: user.email },
+      });
+      return res.data;
+    },
+  });
 
   // Fetch Comments
   const { data: comments = [] } = useQuery({
@@ -291,7 +302,7 @@ const LessonsDetails = () => {
                 {lesson.creatorName}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Total Lessons: {lesson.totalLessonsByAuthor || 42}
+                Total Lessons: {stats.totalLessons || 0}
               </p>
               <Link
                 to={`/dashboard/profile`}

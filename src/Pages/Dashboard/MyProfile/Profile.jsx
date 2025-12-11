@@ -15,6 +15,16 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
 
+  const { data: stats = {} } = useQuery({
+    queryKey: ["user-stats", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/user-stats", {
+        params: { email: user.email },
+      });
+      return res.data;
+    },
+  });
+
   const { data: profile = {}, isLoading } = useQuery({
     queryKey: ["profile", user.email],
     queryFn: async () => {
@@ -106,8 +116,8 @@ const Profile = () => {
               </span>
             )}
             <div className="flex gap-4 mt-4">
-              <p>Lessons Created: {profile.totalLessons || 0}</p>
-              <p>Lessons Saved: {profile.totalFavorites || 0}</p>
+              <p>Lessons Created: {stats.totalLessons || 0}</p>
+              <p>Lessons Saved: {stats.totalFavorites || 0}</p>
             </div>
           </div>
           <button onClick={() => setEditing(true)} className="btn btn-outline">
