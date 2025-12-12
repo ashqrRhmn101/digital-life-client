@@ -4,13 +4,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 import SocialLogin from "../../SocialLogin/SocialLogin";
-import axios from "axios";
 
 const Login = () => {
   const { signInUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const {
     register,
@@ -19,12 +18,10 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      await signInUser(data.email, data.password);
+    setBtnLoading(true);
 
-      // optional: MongoDB  login track
-      await axios.post("/api/users/login", { email: data.email });
+    try {
+      const result = await signInUser(data.email, data.password);
 
       Swal.fire({
         icon: "success",
@@ -33,7 +30,7 @@ const Login = () => {
         showConfirmButton: false,
       });
 
-      navigate(location.state?.from || "/dashboard");
+      navigate(location?.state || "/");
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -43,7 +40,7 @@ const Login = () => {
           : "Invalid email or password",
       });
     } finally {
-      setLoading(false);
+      setBtnLoading(false);
     }
   };
 
@@ -91,10 +88,10 @@ const Login = () => {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={btnLoading}
               className="btn btn-lg w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-none shadow-lg"
             >
-              {loading ? (
+              {btnLoading ? (
                 <span className="loading loading-spinner"></span>
               ) : (
                 "Login"

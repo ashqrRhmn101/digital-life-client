@@ -20,12 +20,18 @@ import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
 import ManageLessons from "../Pages/Dashboard/Admin/ManageLessons/ManageLessons";
 import ReportedLessons from "../Pages/Dashboard/Admin/ReportedLessons/ReportedLessons";
 import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile/AdminProfile";
+import NotFound from "../Components/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    // errorElement: NotFound,
     children: [
+      {
+        path: "*",
+        element: <NotFound />,
+      },
       {
         index: true,
         Component: Home,
@@ -67,12 +73,17 @@ const router = createBrowserRouter([
 
   {
     path: "/dashboard",
+    // errorElement: NotFound,
     element: (
       <PrivateRouter>
         <DashboardLayout />
       </PrivateRouter>
     ),
     children: [
+      {
+        path: "*",
+        element: <NotFound />,
+      },
       {
         path: "/dashboard",
         Component: DashboardHome,

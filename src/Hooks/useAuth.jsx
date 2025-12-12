@@ -16,7 +16,7 @@ const useAuth = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  // MongoDB role + isPremium
+  //  role + isPremium
   const {
     data: currentUser = {},
     isLoading: userLoading,
