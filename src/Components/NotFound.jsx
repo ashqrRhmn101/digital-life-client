@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Lottie from "lottie-react";
-// import notFoundAnimation from "../../assets/lottie/404-astronaut.json";
+import notFoundAnimation from "../assets/lottie/404-astronaut.json";
 
 const NotFound = () => {
   return (
@@ -9,7 +9,7 @@ const NotFound = () => {
       <div className="text-center max-w-2xl mx-auto">
         {/* Lottie Animation */}
         <Lottie
-        //   animationData={notFoundAnimation}
+          animationData={notFoundAnimation}
           loop={true}
           style={{ width: 400, height: 400 }}
           className="mx-auto"

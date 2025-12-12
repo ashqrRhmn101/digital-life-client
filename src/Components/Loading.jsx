@@ -1,13 +1,13 @@
 import React from "react";
 import Lottie from "lottie-react";
-// import loadingAnimation from "../assets/lottie/loading-spiral.json";
+import loadingAnimation from "../assets/lottie/loading-spiral.json";
 
 const Loading = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-black flex items-center justify-center px-4">
       <div className="text-center">
         <Lottie
-        //   animationData={loadingAnimation}
+          animationData={loadingAnimation}
           loop={true}
           style={{ width: 200, height: 200 }}
           className="mx-auto"

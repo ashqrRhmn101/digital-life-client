@@ -7,6 +7,7 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Loading from "../../../Components/Loading";
 
 const MyLessons = () => {
   const { user } = useAuth();
@@ -84,7 +85,7 @@ const MyLessons = () => {
     updateMutation.mutate({ id: editingLesson._id, data });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="min-h-screen bg-base-100 py-12 px-4">
@@ -188,10 +189,12 @@ const MyLessons = () => {
               <input
                 type="text"
                 {...register("title")}
+                placeholder="Title"
                 className="input input-bordered w-full"
               />
               <textarea
                 {...register("description")}
+                placeholder="Description"
                 className="textarea textarea-bordered w-full h-32"
               />
               <button

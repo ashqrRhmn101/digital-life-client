@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import useAuth from "../../../../Hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loading from "../../../../Components/Loading";
 
 const ManageLessons = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +27,7 @@ const ManageLessons = () => {
     },
   });
 
-  if (loading || isLoading) return <div>Loading...</div>;
+  if (loading || isLoading) return <Loading/>;
   if (!isAdmin) return <Navigate to="/dashboard" />;
 
   return (
@@ -41,7 +42,7 @@ const ManageLessons = () => {
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
-            <tr className="bg-amber-100">
+            <tr className="bg-amber-500">
               <th>Title</th>
               <th>Creator</th>
               <th>Category</th>

@@ -107,7 +107,7 @@ const Profile = () => {
             alt="Profile"
             className="w-32 h-32 rounded-full ring-4 ring-amber-500 shadow-lg"
           />
-          <div className="flex-grow">
+          <div className="flex-grow text-white">
             <h3 className="text-3xl font-bold">{profile.name}</h3>
             <p className="text-gray-600 dark:text-gray-300">{profile.email}</p>
             {profile.isPremium && (
@@ -120,7 +120,7 @@ const Profile = () => {
               <p>Lessons Saved: {stats.totalFavorites || 0}</p>
             </div>
           </div>
-          <button onClick={() => setEditing(true)} className="btn btn-outline">
+          <button onClick={() => setEditing(true)} className="btn btn-outline text-white hover:text-black">
             <FaEdit /> Edit
           </button>
         </div>

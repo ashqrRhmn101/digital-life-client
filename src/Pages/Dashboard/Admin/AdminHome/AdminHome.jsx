@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import Loading from "../../../../Components/Loading";
 
 const AdminHome = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -16,7 +17,9 @@ const AdminHome = () => {
     },
   });
 
-  if (loading) return <div>Loading...</div>;
+  // console.log(stats)
+
+  if (loading) return <Loading/>;
   if (!isAdmin) return <Navigate to="/dashboard" replace />;
 
   return (

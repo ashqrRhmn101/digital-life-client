@@ -14,6 +14,8 @@ import {
   FaEye,
   FaLock,
 } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+
 import { MdKeyboardBackspace } from "react-icons/md";
 import {
   FacebookShareButton,
@@ -55,7 +57,7 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
-  console.log(lesson)
+  console.log(lesson);
 
   // uer profile get
   const { data: profile = {} } = useQuery({
@@ -79,7 +81,7 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
-  console.log(stats)
+  // console.log(stats)
 
   // Fetch Comments
   const { data: comments = [] } = useQuery({
@@ -107,11 +109,65 @@ const LessonsDetails = () => {
     enabled: !!lesson,
   });
 
+  // Fetch Favorites (check if this lesson is favorited)
+  const { data: favoriteList = [] } = useQuery({
+    queryKey: ["favorites", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/favorites`, {
+        params: { email: user?.email },
+      });
+      return res.data;
+    },
+  });
+
+  const isFavorite = favoriteList.some((item) => item._id === lesson._id);
+
+  // Add Favorite
+  const addFavorite = useMutation({
+    mutationFn: async () =>
+      axiosSecure.post("/favorites", {
+        userEmail: user.email,
+        lessonId: lesson._id,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["favorites", user?.email]);
+      Swal.fire("Saved!", "Added to favorites.", "success");
+    },
+  });
+
+  // Remove Favorite
+  const removeFavorite = useMutation({
+    mutationFn: async (favoriteId) =>
+      axiosSecure.delete(`/favorites/${favoriteId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["favorites", user?.email]);
+      Swal.fire("Removed!", "Removed from favorites.", "info");
+    },
+  });
+
+  const toggleFavorite = () => {
+    if (!user) {
+      return Swal.fire("Login Required", "Please login first.", "warning");
+    }
+
+    if (!isFavorite) {
+      addFavorite.mutate();
+    } else {
+      const favoriteItem = favoriteList.find((f) => f._id === lesson._id);
+
+      if (favoriteItem && favoriteItem._id) {
+        removeFavorite.mutate(favoriteItem._id);
+      }
+    }
+  };
+
+  // ================== Mutation =============================
   // Like Mutation
   const likeMutation = useMutation({
     mutationFn: async (action) => {
       await axiosSecure.post(`/lessons/${id}/like`, {
-        userId: user._id,
+        userId: user.uid,
         action,
       });
     },
@@ -124,7 +180,7 @@ const LessonsDetails = () => {
   const saveMutation = useMutation({
     mutationFn: async (action) => {
       await axiosSecure.post(`/lessons/${id}/save`, {
-        userId: user._id,
+        userId: user.uid,
         action,
       });
     },
@@ -137,7 +193,7 @@ const LessonsDetails = () => {
   const handleReport = async (reason) => {
     await axiosSecure.post(`/lessons/${id}/report`, {
       lessonTitle: lesson.title,
-      reporterId: user?._id,
+      reporterId: user?.uid,
       reporterName: user?.displayName,
       // action: action,
       reason,
@@ -166,7 +222,7 @@ const LessonsDetails = () => {
       });
       return;
     }
-    const isLiked = lesson.likesArray?.includes(user._id);
+    // const isLiked = lesson.likesArray?.includes(user?.uid);
     likeMutation.mutate(isLiked ? "unlike" : "like");
   };
 
@@ -180,15 +236,19 @@ const LessonsDetails = () => {
       });
       return;
     }
-    const isSaved = lesson.savesArray?.includes(user._id);
+    // const isSaved = lesson.savesArray?.includes(user?.uid);
     saveMutation.mutate(isSaved ? "unsave" : "save");
   };
+
+  // derive states from lesson data
+  const isLiked = lesson?.likesArray?.includes(user?.uid);
+  const isSaved = lesson?.savesArray?.includes(user?.uid);
 
   // Post Comment
   const postCommentMutation = useMutation({
     mutationFn: async (text) => {
       const res = await axiosSecure.post(`/lessons/${id}/comments`, {
-        userId: user._id,
+        userId: user.uid,
         text,
       });
       return res.data;
@@ -283,7 +343,7 @@ const LessonsDetails = () => {
             <LucideClock className="w-5 h-5 text-amber-500" />
             Reading Time: {Math.ceil(lesson.fullDescription / 200)} min
           </div>
-          <span className="badge badge-outline">Public</span>
+          <span className="badge badge-outline">{lesson.visibility}</span>
         </div>
 
         {/* 3. Author Section */}
@@ -349,16 +409,37 @@ const LessonsDetails = () => {
         >
           <button
             onClick={toggleSave}
-            className="btn btn-circle btn-outline text-amber-600 hover:bg-amber-600 hover:text-white"
+            className={`btn btn-circle btn-outline ${
+              isSaved
+                ? "bg-amber-600 text-white"
+                : "text-amber-600 hover:bg-amber-600 hover:text-white"
+            }`}
           >
             <FaBookmark className="text-xl" />
           </button>
+
           <button
             onClick={toggleLike}
-            className="btn btn-circle btn-outline text-red-500 hover:bg-red-500 hover:text-white"
+            className={`btn btn-circle btn-outline ${
+              isLiked
+                ? " bg-blue-500 text-white"
+                : "text-red-500 hover:bg-red-500 hover:text-white"
+            }`}
+          >
+            <AiOutlineLike className="text-xl" />
+          </button>
+
+          <button
+            onClick={toggleFavorite}
+            className={`btn btn-circle btn-outline ${
+              isFavorite
+                ? "text-white bg-red-500"
+                : "text-amber-600 hover:bg-amber-600 hover:text-white"
+            }`}
           >
             <FaHeart className="text-xl" />
           </button>
+
           <button
             onClick={() => setShowReportModal(true)}
             className="btn btn-circle btn-outline text-orange-500 hover:bg-orange-500 hover:text-white"
