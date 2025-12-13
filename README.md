@@ -1,16 +1,39 @@
-# React + Vite
+# Digital Life Lessons – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive full-stack web application where users can share, save, and discover meaningful life lessons. Built with React, Vite, DaisyUI, Tailwind CSS, and Firebase authentication.
 
-Currently, two official plugins are available:
+Live Demo
+https://digital-life-client.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Email/Password + Google Login
+- Premium membership with lifetime access (Stripe integration)
+- Create, edit, delete personal life lessons
+- Public lessons with filters, search, pagination
+- Like, save, report, comment on lessons
+- Admin panel (manage users, lessons, reports)
+- Dark mode + beautiful animations (AOS + Lottie)
+- Responsive design (mobile, tablet, desktop)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React 18, Vite, React Router, TanStack Query, React Hook Form
+- **UI**: DaisyUI, Tailwind CSS, AOS (animations), Lottie React
+- **Auth**: Firebase Authentication
+- **State**: Context API + Custom Hooks
+- **Payments**: Stripe Checkout
+- **Others**: SweetAlert2, Axios, Tippy.js (tooltips)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installation
+
+1. Clone the repo
+```bash
+git clone https://github.com/yourusername/digital-life-lessons-client.git
+cd digital-life-lessons-client
+
+npm install
+VITE_image_host_key=your_imgbb_api_key
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+npm run dev
+```
