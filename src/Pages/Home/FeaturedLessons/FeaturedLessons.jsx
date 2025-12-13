@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import LessonCard from "../../PublicLessons/LessonCard";
+import Loading from "../../../Components/Loading";
 
 const FeaturedLessons = () => {
   const axiosSecure = useAxiosSecure();
@@ -9,14 +10,14 @@ const FeaturedLessons = () => {
   const { data: featured = [], isLoading } = useQuery({
     queryKey: ["featured-lessons"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/lessons?featured=true");
-      return res.data;
+      const res = await axiosSecure.get("/lessons");
+      return res.data.lessons;
     },
   });
 
-  console.log(featured)
+  //   console.log(featured)
 
-  if (isLoading) return <div>Loading featured lessons...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -24,7 +25,7 @@ const FeaturedLessons = () => {
         Featured Life Lessons ⭐
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {featured.map((lesson, i) => (
+        {featured.slice(0, 6).map((lesson, i) => (
           <div data-aos="fade-up" data-aos-delay={i * 100} key={lesson._id}>
             <LessonCard lesson={lesson} />
           </div>
