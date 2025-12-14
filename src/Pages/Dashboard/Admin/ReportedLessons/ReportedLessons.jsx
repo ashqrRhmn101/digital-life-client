@@ -95,10 +95,9 @@ const ReportedLessons = () => {
                 <h3 className="text-2xl font-bold text-red-700 dark:text-red-400">
                   {report.lessonTitle}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mt-1">
+                <p className="mt-1">
                   Reported by:{" "}
-                  <span className="font-medium">{report.reporterName}</span> (
-                  {report.reporterEmail})
+                  <span className="font-medium">{report.reporterName || "Anonymous"}</span>
                 </p>
                 <p className="mt-2">
                   <strong>Reason:</strong> {report.reason}
@@ -124,7 +123,7 @@ const ReportedLessons = () => {
                   handleAction(report._id, "ignore", report.lessonTitle)
                 }
                 disabled={actionMutation.isLoading}
-                className="btn btn-outline hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="btn btn-outline hover:bg-gray-100"
               >
                 Ignore Report
               </button>

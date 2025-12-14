@@ -12,7 +12,7 @@ const TopContributors = () => {
       return res.data;
     },
   });
-console.log(contributors)
+// console.log(contributors)
   return (
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="text-5xl font-bold mb-12 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
@@ -31,7 +31,7 @@ console.log(contributors)
               alt={user.name}
               className="w-32 h-32 rounded-full ring-8 ring-amber-500 shadow-2xl mx-auto mb-4"
             />
-            <h3 className="text-xl font-bold">{user.name}</h3>
+            <h3 className="text-xl font-bold text-gray-600 dark:text-gray-300">{user.name}</h3>
             <p className="text-amber-600 font-bold text-2xl">
                <span className="badge badge-lg badge-warning text-xl py-4 px-8">{user.accessLevel}</span>
             </p>

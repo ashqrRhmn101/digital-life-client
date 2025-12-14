@@ -81,7 +81,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-black px-4 py-12">
       <div data-aos="fade-up" data-aos-delay="100" className="w-full max-w-md">
-        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800">
+        <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800 text-white">
           <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent mb-2">
             Join Digital Life Lessons
           </h2>
@@ -185,7 +185,6 @@ const Register = () => {
             </Link>
           </p>
 
-          <div className="divider my-8 text-gray-500">OR</div>
           <SocialLogin />
         </div>
       </div>

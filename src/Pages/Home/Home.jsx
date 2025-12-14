@@ -10,7 +10,7 @@ const reviewsPromise = fetch("/reviews.json").then((res) => res.json());
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 dark:from-gray-900 dark:to-black">
+    <div className="min-h-screen bg-gradient-to-b">
       {/* 1. Hero Banner */}
       <section data-aos="fade-in">
         <Banner />
@@ -25,7 +25,7 @@ const Home = () => {
       <section
         data-aos="fade-up"
         data-aos-delay="300"
-        className="py-20 bg-white dark:bg-gray-800"
+        className="py-20 "
       >
         <Benefits />
       </section>
@@ -39,7 +39,7 @@ const Home = () => {
       <section
         data-aos="fade-up"
         data-aos-delay="500"
-        className="py-20 bg-gray-50 dark:bg-gray-900"
+        className="py-20 "
       >
         <MostSavedLessons />
       </section>

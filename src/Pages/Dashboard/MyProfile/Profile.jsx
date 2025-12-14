@@ -107,20 +107,20 @@ const Profile = () => {
             alt="Profile"
             className="w-32 h-32 rounded-full ring-4 ring-amber-500 shadow-lg"
           />
-          <div className="flex-grow text-white">
-            <h3 className="text-3xl font-bold">{profile.name}</h3>
+          <div className="flex-grow">
+            <h3 className="text-3xl font-bold text-gray-600 dark:text-gray-300">{profile.name}</h3>
             <p className="text-gray-600 dark:text-gray-300">{profile.email}</p>
             {profile.isPremium && (
               <span className="badge badge-warning text-lg mt-2">
                 <FaStar /> Premium
               </span>
             )}
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-4 text-gray-600 dark:text-gray-300">
               <p>Lessons Created: {stats.totalLessons || 0}</p>
               <p>Lessons Saved: {stats.totalFavorites || 0}</p>
             </div>
           </div>
-          <button onClick={() => setEditing(true)} className="btn btn-outline text-white hover:text-black">
+          <button onClick={() => setEditing(true)} className="btn btn-outline text-gray-600 dark:text-gray-300 hover:bg-amber-600">
             <FaEdit /> Edit
           </button>
         </div>
@@ -152,7 +152,7 @@ const Profile = () => {
               <button
                 type="button"
                 onClick={() => setEditing(false)}
-                className="btn btn-outline flex-1"
+                className="btn btn-outline flex-1 bg-gray-600 text-white"
               >
                 Cancel
               </button>

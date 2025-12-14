@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./Router/Router.jsx";
 import AuthProvider from "./Contexts/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 
 // AOS Import + Global Init
 import AOS from "aos";
@@ -32,11 +33,14 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </QueryClientProvider>
-  </StrictMode>
+  <>
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </QueryClientProvider>
+    </StrictMode>
+    <Analytics />
+  </>
 );

@@ -16,10 +16,13 @@ import useAuth from "../Hooks/useAuth";
 
 const DashboardLayout = () => {
   const { isAdmin, isPremium, user } = useAuth();
-//   const isAdmin = user?.role === "admin"; 
+  //   const isAdmin = user?.role === "admin";
 
   return (
-    <div className="drawer lg:drawer-open min-h-screen bg-base-100" data-aos="fade-down">
+    <div
+      className="drawer lg:drawer-open min-h-screen bg-base-100"
+      data-aos="fade-down"
+    >
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
@@ -70,7 +73,17 @@ const DashboardLayout = () => {
       <div className="drawer-side">
         <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 bg-base-200 text-base-content space-y-2">
-          <div className="p-4 border-b border-gray-300">
+          <div className="flex-1 px-2 mx-2 text-xl font-bold bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="p-2 bg-amber-500/10 rounded-xl">
+                <FaLeaf className="w-8 h-8 text-amber-600" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent hidden sm:block">
+                Back To Home
+              </span>
+            </Link>
+          </div>
+          <div className="p-4 pb-7 border-b border-gray-300">
             <div className="flex items-center gap-3">
               <img
                 src={user?.photoURL}
@@ -80,7 +93,13 @@ const DashboardLayout = () => {
               <div className="space-y-1">
                 <p className="font-bold">{user?.displayName}</p>
                 <p className="text-sm text-gray-500">{user?.email}</p>
-                {user && isPremium && <span className="badge badge-warning">Premium ⭐</span> || <span className="badge badge-warning text-red-500 font-semibold">Not Premium</span>}
+                {(user && isPremium && (
+                  <span className="badge badge-warning">Premium ⭐</span>
+                )) || (
+                  <span className="badge badge-warning text-red-500 font-semibold">
+                    Not Premium
+                  </span>
+                )}
               </div>
             </div>
           </div>

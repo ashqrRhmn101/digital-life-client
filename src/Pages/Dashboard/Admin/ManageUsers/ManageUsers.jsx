@@ -70,7 +70,7 @@ const ManageUsers = () => {
   if (!isAdmin) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="p-8 min-h-screen bg-base-100 text-white">
+    <div className="p-8 min-h-screen bg-base-100">
       <h2
         data-aos="fade-up"
         className="text-4xl font-bold text-center mb-10 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent"
@@ -79,8 +79,8 @@ const ManageUsers = () => {
       </h2>
 
       <div className="overflow-x-auto shadow-2xl rounded-xl">
-        <table className="table w-full bg-white dark:bg-gray-800">
-          <thead className="bg-amber-100 dark:bg-amber-900">
+        <table className="table w-full">
+          <thead className="bg-amber-500 text-white">
             <tr>
               <th className="text-left">Photo</th>
               <th className="text-left">Name</th>
@@ -96,7 +96,7 @@ const ManageUsers = () => {
                 data-aos="fade-up"
                 data-aos-delay={i * 50}
                 key={u._id}
-                className="border-b hover:bg-amber-50 dark:hover:bg-gray-700 transition"
+                className="border-b hover:bg-amber-50 transition"
               >
                 <td>
                   <img

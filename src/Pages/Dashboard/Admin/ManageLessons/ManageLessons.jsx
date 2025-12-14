@@ -20,18 +20,38 @@ const ManageLessons = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id) => await axiosSecure.delete(`/lessons/${id}`),
+    mutationFn: async (id) => {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/lessons/${id}`);
+        return res.data;
+      } else {
+        throw new Error("Deletion cancelled");
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["all-lessons-admin"]);
-      Swal.fire("Deleted!", "Lesson removed", "success");
+      Swal.fire("Deleted!", "Lesson removed successfully", "success");
+    },
+    onError: () => {
+      Swal.fire("Cancelled", "Lesson was not deleted", "info");
     },
   });
 
-  if (loading || isLoading) return <Loading/>;
+  if (loading || isLoading) return <Loading />;
   if (!isAdmin) return <Navigate to="/dashboard" />;
 
   return (
-    <div className="p-8">
+    <div className="p-8 rounded-3xl shadow-2xl border border-amber-200 dark:border-amber-800">
       <h2
         data-aos="fade-up"
         className="text-4xl font-bold text-center mb-10 text-amber-600"
@@ -54,8 +74,13 @@ const ManageLessons = () => {
           </thead>
           <tbody>
             {lessons.map((lesson, i) => (
-              <tr data-aos="fade-up" data-aos-delay={i * 50} key={lesson._id}>
-                <td className="max-w-xs truncate">{lesson.title}</td>
+              <tr
+                data-aos="fade-up"
+                data-aos-delay={i * 50}
+                key={lesson._id}
+                className="hover:bg-amber-50"
+              >
+                <td className="max-w-[200px] truncate">{lesson.title}</td>
                 <td>{lesson.creatorName}</td>
                 <td>{lesson.category}</td>
                 <td>{lesson.accessLevel}</td>

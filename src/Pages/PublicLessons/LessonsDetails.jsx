@@ -57,7 +57,7 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
-  console.log(lesson);
+  // console.log(lesson);
 
   // uer profile get
   const { data: profile = {} } = useQuery({
@@ -109,6 +109,8 @@ const LessonsDetails = () => {
     enabled: !!lesson,
   });
 
+  // console.log(recommended);
+
   // Fetch Favorites (check if this lesson is favorited)
   const { data: favoriteList = [] } = useQuery({
     queryKey: ["favorites", user?.email],
@@ -120,8 +122,10 @@ const LessonsDetails = () => {
       return res.data;
     },
   });
+  // console.log(favoriteList)
 
-  const isFavorite = favoriteList.some((item) => item._id === lesson._id);
+  const isFavorite = favoriteList.some((item) => item._id === lesson?._id);
+  // console.log(isFavorite)
 
   // Add Favorite
   const addFavorite = useMutation({
@@ -249,6 +253,8 @@ const LessonsDetails = () => {
     mutationFn: async (text) => {
       const res = await axiosSecure.post(`/lessons/${id}/comments`, {
         userId: user.uid,
+        userName: user.displayName,
+        userPhoto: user.photoURL,
         text,
       });
       return res.data;
@@ -482,11 +488,9 @@ const LessonsDetails = () => {
         <div
           data-aos="fade-up"
           data-aos-delay="500"
-          className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg p-8 mb-8 z-0"
+          className=" rounded-3xl shadow-lg p-8 mb-8 z-0"
         >
-          <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
-            Comments
-          </h2>
+          <h2 className="text-3xl font-bold mb-6 ">Comments</h2>
           {user ? (
             <CommentForm
               onSubmit={(text) => postCommentMutation.mutate(text)}
@@ -501,14 +505,21 @@ const LessonsDetails = () => {
 
         {/* 7. Similar & Recommended */}
         <div data-aos="fade-up" data-aos-delay="600">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">
+          <h2 className="text-3xl font-bold text-center mb-8">
             Similar Lessons
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recommended.map((rec) => (
-              <RecommendedCard key={rec._id} lesson={rec} />
-            ))}
-          </div>
+
+          {recommended.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No similar lessons found
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommended.map((rec) => (
+                <RecommendedCard key={rec._id} lesson={rec} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

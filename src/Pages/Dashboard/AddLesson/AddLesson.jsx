@@ -89,7 +89,7 @@ const AddLesson = () => {
     <div className="min-h-screen bg-base-100 py-12 px-4">
       <div
         data-aos="fade-up"
-        className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800"
+        className="max-w-3xl mx-auto  rounded-3xl shadow-2xl p-8 border border-amber-200 dark:border-amber-800"
       >
         <h2
           data-aos="zoom-in"

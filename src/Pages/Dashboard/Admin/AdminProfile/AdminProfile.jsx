@@ -8,7 +8,7 @@ const AdminProfile = () => {
   if (!currentUser?.role === "admin") return <Navigate to="/dashboard" />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 dark:from-gray-900 dark:to-black flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-8">
       <div data-aos="zoom-in" className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-12 max-w-2xl text-center border-4 border-amber-500">
         <img src={user.photoURL} className="w-32 h-32 rounded-full mx-auto ring-8 ring-amber-500 mb-6" />
         <h1 className="text-5xl font-bold text-amber-600 mb-2">{user.displayName}</h1>

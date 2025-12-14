@@ -36,7 +36,7 @@ const MyFavorites = () => {
   if (isLoading) return <Loading/>;
 
   return (
-    <div className="min-h-screen bg-base-100 py-12 px-4">
+    <div className="min-h-screen bg-base-100 py-12 px-4 rounded-3xl shadow-2xl border border-amber-200 dark:border-amber-800">
       <h2 data-aos="fade-up" className="text-4xl font-bold text-center bg-gradient-to-r from-amber-600 to-amber-400 bg-clip-text text-transparent mb-8">
         My Favorites
       </h2>

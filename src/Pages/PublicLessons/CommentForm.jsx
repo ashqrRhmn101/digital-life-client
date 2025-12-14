@@ -3,15 +3,26 @@ import Swal from "sweetalert2";
 
 const CommentForm = ({ onSubmit }) => {
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!text.trim()) {
       Swal.fire("Error", "Comment cannot be empty", "error");
       return;
     }
-    onSubmit(text);
-    setText("");
+
+    try {
+      setLoading(true);
+      await onSubmit(text);
+      Swal.fire("Success", "Comment posted successfully!", "success");
+      setText("");
+    } catch (error) {
+      Swal.fire("Error", "Failed to post comment", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,9 +32,14 @@ const CommentForm = ({ onSubmit }) => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Share your thoughts..."
         className="textarea textarea-bordered w-full h-32 mb-4"
+        disabled={loading}
       />
-      <button type="submit" className="btn bg-amber-600 text-white">
-        Post Comment
+      <button
+        type="submit"
+        className="btn bg-amber-600 text-white"
+        disabled={loading}
+      >
+        {loading ? "Posting..." : "Post Comment"}
       </button>
     </form>
   );
